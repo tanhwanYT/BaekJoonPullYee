@@ -1,28 +1,17 @@
 import sys
-import random
 input = sys.stdin.readline
+
 n = int(input())
+count = [0] * 10001 
 
-num = [0] * n
+for _ in range(n):
+    num = int(input())
+    count[num] += 1
 
-for i in range(n):
-    num[i] = int(input())
+for i in range(1, 10001):
+    if count[i] != 0:
+        for _ in range(count[i]):
+            sys.stdout.write(str(i) + '\n')
 
-def quick_sort(num):
-    if(len(num) <= 1): return num
-    piv = random.choice(num)
-    front, pivot, back = [],[],[]
-    for i in num:
-        if(i < num[piv]):
-            front.append(i)
-        elif(i > num[piv]):
-            back.append(i)
-        else:
-            pivot.append(i)
-    return quick_sort(front) + quick_sort(pivot) + quick_sort(back)
 
-num = quick_sort(num)
-
-sys.stdout.write("\n".join(map(str, num)))
-
-#이거 오류남
+#카운팅 스타
