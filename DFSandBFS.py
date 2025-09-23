@@ -12,25 +12,22 @@ for i in range(m):
 
 def dfs(nodelist, startnode):
     visited[startnode] = True
-    for i in range(m):
-        if(nodelist[i] == nodelist):
-            print(startnode, end = " ")
-            bfs(nodelist, i)
-        else:
-            bfs(nodelist, i)
+    print(startnode, end = " ")
+    for next in sorted(nodelist[startnode]):
+        if(not visited[next]): dfs(nodelist, next)
 
 def bfs(nodelist, startnode):
     queue.append(startnode)
-    visited[node] = True
-    while(len(queue) == 0):
-        num = pop.queue()
-        print(pop.queue(), end=" ")
-        for i in range(m):
-            if(nodelist[num][i] == 1):
-                queue.append(i)
-                visited[i] = True
+    visited[startnode] = True
+    while(queue):
+        num = queue.popleft()
+        print(num, end=" ")
+        for next in sorted(nodelist[num]):
+            if(not visited[next]):
+                queue.append(next)
+                visited[next] = True
 
-for i in range(1, 1+n): numlist[i].sort
+for i in range(1, 1+n): nodelist[i].sort()
 
 visited = [False] * (n+1)
 dfs(nodelist, v)
