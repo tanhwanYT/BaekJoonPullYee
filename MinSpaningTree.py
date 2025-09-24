@@ -1,25 +1,36 @@
 import sys
 input = sys.stdin.readline
+sys.setrecursionlimit(10**6)
 
 v, e = map(int,input().split())
-graph = [][]
+graph = []
 
-for i in range(v): graph[i][i] = 0
 for i in range(e):
-    n, m, index = map(int,input().split())
-    graph[n][m] = index
-    graph[m][n] = index
+    a,b,edge = map(int, input().split())
+    graph.append((edge,a,b))
 
-def spaning(n, sum):
-    next = 0
-    for i in range(v):
-        if(graph[n][i] != None):
-            sum += graph[n][i]
-            next = i
+graph.sort()
+result = 0
+root = dict()
+for i in range(1, v+1): root[i] = i
 
-    spaning(next, sum)
+def find(a):
+    if(root[a] == a):
+        return a
+    else:
+        root[a] = find(root[a])
+        return root[a]
 
-sum = 0
-spaning(1, sum)
+def union(a, b):
+    a = find(a)
+    b = find(b)
 
-#그래프 스패닝 하는법? 처음거 들어간 다음 연결하는 엣지있는지 검사 그거 반복 만들기 개 힘드네 이거 
+    root[b] = a
+
+for edge in graph:
+    if(find(edge[1]) == find(edge[2])): continue
+    else:
+        result += edge[0]
+        union(edge[1], edge[2])
+
+print(result)
